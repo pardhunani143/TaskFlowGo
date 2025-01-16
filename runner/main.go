@@ -19,7 +19,7 @@ func main() {
 	}
 
 	// Register with Manager
-	err := registerRunner(config)
+	err = registerRunner(config)
 	if err != nil {
 		log.Fatalf("Failed to register Runner: %v", err)
 	}
@@ -33,12 +33,12 @@ func main() {
 }
 
 func registerRunner(config types.RunnerConfig) error {
-	payload := RunnerConfig{
+	payload := types.RunnerConfig{
 		RunnerID:       config.RunnerID,
 		Applications:   config.Applications,
 		Groups:         config.Groups,
 		SupportedTasks: config.SupportedTasks,
-		Address:        config.RunnerAddress,
+		RunnerAddress:  config.RunnerAddress,
 	}
 
 	payloadBytes, _ := json.Marshal(payload)
