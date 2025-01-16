@@ -1,0 +1,11 @@
+runner_id: "runner-1"
+manager_url: "http://manager:8080"
+runner_address: "http://runner:8081"
+groups:
+  - "prom-1"
+  - "Group2"
+supported_tasks:
+  - "shell"
+  - "update_config"
+  - "restart"
+  - "stop"
