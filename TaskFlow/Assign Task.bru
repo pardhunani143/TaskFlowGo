@@ -1,0 +1,24 @@
+meta {
+  name: Assign Task
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{global_url}}/task
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id": "update-prom-1",
+    "type": "prometheus",
+    "action": "stop",
+    "config": {
+      "content": "global:\n  scrape_interval: 15s\n\nscrape_configs:\n  - job_name: 'prometheus'\n    static_configs:\n      - targets: ['localhost:9090']\n  - job_name: 'node_exporter'\n    static_configs:\n      - targets: ['104.248.157.131:9100']",
+      "path": "/root/prometheus-2.43.0.linux-amd64/prometheus.yml"
+    },
+    "dir": "/root/prometheus-2.43.0.linux-amd64/"
+  }
+}

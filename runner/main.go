@@ -8,7 +8,9 @@ import (
 	"time"
 
 	"github.com/pardhunani143/TaskFlowGo/runner/config"
+	"github.com/pardhunani143/TaskFlowGo/runner/task"
 	"github.com/pardhunani143/TaskFlowGo/runner/types"
+	"github.com/pardhunani143/TaskFlowGo/runner/web"
 )
 
 func main() {
@@ -18,18 +20,19 @@ func main() {
 		log.Fatalf("Failed to load configuration: %v", err)
 	}
 
-	// Register with Manager
-	err = registerRunner(config)
-	if err != nil {
-		log.Fatalf("Failed to register Runner: %v", err)
-	}
+	// // Register with Manager
+	// err = registerRunner(config)
+	// if err != nil {
+	// 	log.Fatalf("Failed to register Runner: %v", err)
+	// }
 
 	// Start Heartbeat
 	go startHeartbeat(config)
 
-	// Wait for tasks
-	log.Println("Runner is ready and waiting for tasks...")
-	select {} // Keep the program running
+	// Start HTTP Server
+	processor := task.NewProcessor(5, config)
+	// 5 workers
+	web.StartHttpServer(config.ListenAddr, processor)
 }
 
 func registerRunner(config types.RunnerConfig) error {
